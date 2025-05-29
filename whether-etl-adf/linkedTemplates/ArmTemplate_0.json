@@ -11,61 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageLS'"
 		},
-		"AzureSqlDatabase1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
-		},
-		"AzureSqlDatabaseAPI_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseAPI'"
-		},
-		"my_db_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'my_db'"
-		},
 		"weather_db_destination_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'weather_db_destination'"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "abdukalamlserver.database.windows.net"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "abduldb"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "abduldb"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "abdukalamlserver.database.windows.net"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "weather_db"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "abdulkalamserver@abdukalamlserver"
-		},
 		"RestService1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.openweathermap.org/data/3.0/"
-		},
-		"my_db_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "abdukalamlserver.database.windows.net"
-		},
-		"my_db_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "abduldb"
-		},
-		"my_db_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "abduldb"
 		},
 		"weather_db_destination_properties_typeProperties_server": {
 			"type": "string",
@@ -98,50 +50,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]",
-					"database": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('AzureSqlDatabase1_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseAPI')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_server')]",
-					"database": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('AzureSqlDatabaseAPI_password')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/RestService1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -152,28 +60,6 @@
 					"url": "[parameters('RestService1_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": true,
 					"authenticationType": "Anonymous"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/my_db')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"server": "[parameters('my_db_properties_typeProperties_server')]",
-					"database": "[parameters('my_db_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": false,
-					"authenticationType": "SQL",
-					"userName": "[parameters('my_db_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('my_db_password')]"
-					}
 				}
 			},
 			"dependsOn": []

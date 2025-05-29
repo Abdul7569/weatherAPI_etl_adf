@@ -11,61 +11,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageLS'"
 		},
-		"AzureSqlDatabase1_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
-		},
-		"AzureSqlDatabaseAPI_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseAPI'"
-		},
-		"my_db_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'my_db'"
-		},
 		"weather_db_destination_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'weather_db_destination'"
 		},
-		"AzureSqlDatabase1_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "abdukalamlserver.database.windows.net"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "abduldb"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "abduldb"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "abdukalamlserver.database.windows.net"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "weather_db"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "abdulkalamserver@abdukalamlserver"
-		},
 		"RestService1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://api.openweathermap.org/data/3.0/"
-		},
-		"my_db_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "abdukalamlserver.database.windows.net"
-		},
-		"my_db_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "abduldb"
-		},
-		"my_db_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "abduldb"
 		},
 		"weather_db_destination_properties_typeProperties_server": {
 			"type": "string",
@@ -109,47 +61,11 @@
 					"AzureBlobStorageLS_connectionString": {
 						"value": "[parameters('AzureBlobStorageLS_connectionString')]"
 					},
-					"AzureSqlDatabase1_password": {
-						"value": "[parameters('AzureSqlDatabase1_password')]"
-					},
-					"AzureSqlDatabaseAPI_password": {
-						"value": "[parameters('AzureSqlDatabaseAPI_password')]"
-					},
-					"my_db_password": {
-						"value": "[parameters('my_db_password')]"
-					},
 					"weather_db_destination_password": {
 						"value": "[parameters('weather_db_destination_password')]"
 					},
-					"AzureSqlDatabase1_properties_typeProperties_server": {
-						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
-					},
-					"AzureSqlDatabase1_properties_typeProperties_database": {
-						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
-					},
-					"AzureSqlDatabase1_properties_typeProperties_userName": {
-						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
-					},
-					"AzureSqlDatabaseAPI_properties_typeProperties_server": {
-						"value": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_server')]"
-					},
-					"AzureSqlDatabaseAPI_properties_typeProperties_database": {
-						"value": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_database')]"
-					},
-					"AzureSqlDatabaseAPI_properties_typeProperties_userName": {
-						"value": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_userName')]"
-					},
 					"RestService1_properties_typeProperties_url": {
 						"value": "[parameters('RestService1_properties_typeProperties_url')]"
-					},
-					"my_db_properties_typeProperties_server": {
-						"value": "[parameters('my_db_properties_typeProperties_server')]"
-					},
-					"my_db_properties_typeProperties_database": {
-						"value": "[parameters('my_db_properties_typeProperties_database')]"
-					},
-					"my_db_properties_typeProperties_userName": {
-						"value": "[parameters('my_db_properties_typeProperties_userName')]"
 					},
 					"weather_db_destination_properties_typeProperties_server": {
 						"value": "[parameters('weather_db_destination_properties_typeProperties_server')]"

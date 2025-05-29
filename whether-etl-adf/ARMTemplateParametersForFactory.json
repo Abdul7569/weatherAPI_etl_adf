@@ -8,47 +8,11 @@
 		"AzureBlobStorageLS_connectionString": {
 			"value": ""
 		},
-		"AzureSqlDatabase1_password": {
-			"value": ""
-		},
-		"AzureSqlDatabaseAPI_password": {
-			"value": ""
-		},
-		"my_db_password": {
-			"value": ""
-		},
 		"weather_db_destination_password": {
 			"value": ""
 		},
-		"AzureSqlDatabase1_properties_typeProperties_server": {
-			"value": "abdukalamlserver.database.windows.net"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_database": {
-			"value": "abduldb"
-		},
-		"AzureSqlDatabase1_properties_typeProperties_userName": {
-			"value": "abduldb"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_server": {
-			"value": "abdukalamlserver.database.windows.net"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_database": {
-			"value": "weather_db"
-		},
-		"AzureSqlDatabaseAPI_properties_typeProperties_userName": {
-			"value": "abdulkalamserver@abdukalamlserver"
-		},
 		"RestService1_properties_typeProperties_url": {
 			"value": "https://api.openweathermap.org/data/3.0/"
-		},
-		"my_db_properties_typeProperties_server": {
-			"value": "abdukalamlserver.database.windows.net"
-		},
-		"my_db_properties_typeProperties_database": {
-			"value": "abduldb"
-		},
-		"my_db_properties_typeProperties_userName": {
-			"value": "abduldb"
 		},
 		"weather_db_destination_properties_typeProperties_server": {
 			"value": "abdukalamlserver.database.windows.net"
