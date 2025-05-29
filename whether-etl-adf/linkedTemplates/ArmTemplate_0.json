@@ -1,0 +1,704 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "whether-etl-adf"
+		},
+		"AzureBlobStorageLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorageLS'"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"AzureSqlDatabaseAPI_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabaseAPI'"
+		},
+		"my_db_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'my_db'"
+		},
+		"weather_db_destination_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'weather_db_destination'"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "abdukalamlserver.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "abduldb"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "abduldb"
+		},
+		"AzureSqlDatabaseAPI_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "abdukalamlserver.database.windows.net"
+		},
+		"AzureSqlDatabaseAPI_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "weather_db"
+		},
+		"AzureSqlDatabaseAPI_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "abdulkalamserver@abdukalamlserver"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://api.openweathermap.org/data/3.0/"
+		},
+		"my_db_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "abdukalamlserver.database.windows.net"
+		},
+		"my_db_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "abduldb"
+		},
+		"my_db_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "abduldb"
+		},
+		"weather_db_destination_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "abdukalamlserver.database.windows.net"
+		},
+		"weather_db_destination_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "weather_db"
+		},
+		"weather_db_destination_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "abdulkalamserver@abdukalamlserver"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorageLS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorageLS_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabaseAPI')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabaseAPI_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabaseAPI_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RestService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "RestService",
+				"typeProperties": {
+					"url": "[parameters('RestService1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": true,
+					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/my_db')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('my_db_properties_typeProperties_server')]",
+					"database": "[parameters('my_db_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('my_db_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('my_db_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/weather_db_destination')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('weather_db_destination_properties_typeProperties_server')]",
+					"database": "[parameters('weather_db_destination_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('weather_db_destination_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('weather_db_destination_password')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "Central India",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 10,
+							"cleanup": false,
+							"customProperties": []
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "weather_db_destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "lat",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "lon",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "timezone",
+						"type": "nvarchar"
+					},
+					{
+						"name": "timezone_offset",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dt",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "sunrise",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "sunset",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "moonrise",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "moonset",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "moon_phase",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "summary",
+						"type": "nvarchar"
+					},
+					{
+						"name": "temp_day",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "temp_min",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "temp_max",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "temp_night",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "temp_eve",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "temp_morn",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "feels_like_day",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "feels_like_night",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "feels_like_eve",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "feels_like_morn",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pressure",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "humidity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dew_point",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "wind_speed",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "wind_deg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "wind_gust",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "weather_id",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "weather_main",
+						"type": "nvarchar"
+					},
+					{
+						"name": "weather_description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "weather_icon",
+						"type": "nvarchar"
+					},
+					{
+						"name": "clouds",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "pop",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "rain",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "uvi",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "inserted_at",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "daily_weather"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/weather_db_destination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/apidataTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "weather_db_destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "daily_WeatherForecast"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/weather_db_destination')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/restapi')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RestService1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "RestResource",
+				"typeProperties": {
+					"relativeUrl": "onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=cdbe36ac4f74b684c2700f69a67646da"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RestService1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/weather_json_data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorageLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "data_1abb1b3f-ec97-45b9-9320-66c56ce0dd9b_63ba864f-ee1c-49bb-ac30-be906e68809d.json",
+						"container": "raw"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorageLS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "weather_json_data",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "apidataTable",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "flatten1"
+						},
+						{
+							"name": "select2"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          current as (clouds as short, dew_point as double, dt as integer, feels_like as double, humidity as short, pressure as short, sunrise as integer, sunset as integer, temp as double, uvi as double, visibility as short, weather as (description as string, icon as double, id as short, main as string)[], wind_deg as short, wind_speed as double),",
+						"          daily as (clouds as short, dew_point as double, dt as integer, feels_like as (day as double, eve as double, morn as double, night as double), humidity as short, moon_phase as double, moonrise as integer, moonset as integer, pop as double, pressure as short, rain as double, summary as string, sunrise as integer, sunset as integer, temp as (day as double, eve as double, max as double, min as double, morn as double, night as double), uvi as double, weather as (description as string, icon as double, id as short, main as string)[], wind_deg as short, wind_gust as double, wind_speed as double)[],",
+						"          lat as double,",
+						"          lon as double,",
+						"          timezone as string,",
+						"          timezone_offset as short",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'documentPerLine') ~> source1",
+						"source1 foldDown(unrollMultiple(daily,daily.weather),",
+						"     mapColumn(",
+						"          daily,",
+						"          lat,",
+						"          lon,",
+						"          timezone,",
+						"          timezone_offset,",
+						"          weather = daily.weather",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> flatten1",
+						"flatten1 select(mapColumn(",
+						"          day_feels_like = daily.feels_like.day,",
+						"          lat,",
+						"          lon,",
+						"          timezone,",
+						"          timezone_offset,",
+						"          eve_feels_like = daily.feels_like.eve,",
+						"          morn_feels_like = daily.feels_like.morn,",
+						"          night_feels_like = daily.feels_like.night,",
+						"          day_temp = daily.temp.day,",
+						"          eve_temp = daily.temp.eve,",
+						"          max_temp = daily.temp.max,",
+						"          min_temp = daily.temp.min,",
+						"          morn_temp = daily.temp.morn,",
+						"          night_temp = daily.temp.night,",
+						"          weather = daily.weather,",
+						"          clouds = daily.clouds,",
+						"          dew_point = daily.dew_point,",
+						"          dt = daily.dt,",
+						"          humidity = daily.humidity,",
+						"          moon_phase = daily.moon_phase,",
+						"          moonset = daily.moonset,",
+						"          moonrise = daily.moonrise,",
+						"          pop = daily.pop,",
+						"          pressure = daily.pressure,",
+						"          rain = daily.rain,",
+						"          summary = daily.summary,",
+						"          sunrise = daily.sunrise,",
+						"          sunset = daily.sunset,",
+						"          uvi = daily.uvi,",
+						"          wind_deg = daily.wind_deg,",
+						"          wind_speed = daily.wind_speed,",
+						"          wind_speed = daily.wind_gust,",
+						"          description = daily.weather[1].description,",
+						"          icon = daily.weather[1].icon,",
+						"          main = daily.weather[1].main",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"select2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/weather_json_data')]",
+				"[concat(variables('factoryId'), '/datasets/apidataTable')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/openwhetherpipeline')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "RestSource",
+								"httpRequestTimeout": "00:01:40",
+								"requestInterval": "00.00:00:00.010",
+								"requestMethod": "GET",
+								"paginationRules": {
+									"supportRFC5988": "true"
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "restapi",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "weather_json_data",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2025-05-28T19:33:41Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/restapi')]",
+				"[concat(variables('factoryId'), '/datasets/weather_json_data')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		}
+	]
+}
