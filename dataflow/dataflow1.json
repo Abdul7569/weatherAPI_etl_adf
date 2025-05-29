@@ -1,0 +1,108 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "weather_json_data",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "apidataTable",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "flatten1"
+				},
+				{
+					"name": "select2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          current as (clouds as short, dew_point as double, dt as integer, feels_like as double, humidity as short, pressure as short, sunrise as integer, sunset as integer, temp as double, uvi as double, visibility as short, weather as (description as string, icon as double, id as short, main as string)[], wind_deg as short, wind_speed as double),",
+				"          daily as (clouds as short, dew_point as double, dt as integer, feels_like as (day as double, eve as double, morn as double, night as double), humidity as short, moon_phase as double, moonrise as integer, moonset as integer, pop as double, pressure as short, rain as double, summary as string, sunrise as integer, sunset as integer, temp as (day as double, eve as double, max as double, min as double, morn as double, night as double), uvi as double, weather as (description as string, icon as double, id as short, main as string)[], wind_deg as short, wind_gust as double, wind_speed as double)[],",
+				"          lat as double,",
+				"          lon as double,",
+				"          timezone as string,",
+				"          timezone_offset as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     documentForm: 'documentPerLine') ~> source1",
+				"source1 foldDown(unrollMultiple(daily,daily.weather),",
+				"     mapColumn(",
+				"          daily,",
+				"          lat,",
+				"          lon,",
+				"          timezone,",
+				"          timezone_offset,",
+				"          weather = daily.weather",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> flatten1",
+				"flatten1 select(mapColumn(",
+				"          day_feels_like = daily.feels_like.day,",
+				"          lat,",
+				"          lon,",
+				"          timezone,",
+				"          timezone_offset,",
+				"          eve_feels_like = daily.feels_like.eve,",
+				"          morn_feels_like = daily.feels_like.morn,",
+				"          night_feels_like = daily.feels_like.night,",
+				"          day_temp = daily.temp.day,",
+				"          eve_temp = daily.temp.eve,",
+				"          max_temp = daily.temp.max,",
+				"          min_temp = daily.temp.min,",
+				"          morn_temp = daily.temp.morn,",
+				"          night_temp = daily.temp.night,",
+				"          weather = daily.weather,",
+				"          clouds = daily.clouds,",
+				"          dew_point = daily.dew_point,",
+				"          dt = daily.dt,",
+				"          humidity = daily.humidity,",
+				"          moon_phase = daily.moon_phase,",
+				"          moonset = daily.moonset,",
+				"          moonrise = daily.moonrise,",
+				"          pop = daily.pop,",
+				"          pressure = daily.pressure,",
+				"          rain = daily.rain,",
+				"          summary = daily.summary,",
+				"          sunrise = daily.sunrise,",
+				"          sunset = daily.sunset,",
+				"          uvi = daily.uvi,",
+				"          wind_deg = daily.wind_deg,",
+				"          wind_speed = daily.wind_speed,",
+				"          wind_speed = daily.wind_gust,",
+				"          description = daily.weather[1].description,",
+				"          icon = daily.weather[1].icon,",
+				"          main = daily.weather[1].main",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "restapi",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RestService1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=cdbe36ac4f74b684c2700f69a67646da"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

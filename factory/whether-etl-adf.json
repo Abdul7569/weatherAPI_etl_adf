@@ -1,0 +1,9 @@
+{
+	"name": "whether-etl-adf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "00e1a84a-eb40-458f-ab66-c7756ab90e86",
+		"tenantId": "ea873390-8c1c-4231-a799-6b5a0235b2e6"
+	}
+}

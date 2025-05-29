@@ -1,0 +1,17 @@
+{
+	"name": "apidataTable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "weather_db_destination",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "daily_WeatherForecast"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

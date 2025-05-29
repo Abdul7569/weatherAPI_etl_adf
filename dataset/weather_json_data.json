@@ -1,0 +1,20 @@
+{
+	"name": "weather_json_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "data_1abb1b3f-ec97-45b9-9320-66c56ce0dd9b_63ba864f-ee1c-49bb-ac30-be906e68809d.json",
+				"container": "raw"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
