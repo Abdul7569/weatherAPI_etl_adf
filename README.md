@@ -48,13 +48,15 @@ The final structured data in Azure SQL Database is connected to **Power BI**, wh
 
 ## 📁 Repository Contents
 
+```plaintext
 weatherAPI_etl_adf/
 │
-├── README.md # Project documentation
-├── pipeline_templates/ # JSON templates for ADF pipelines
-├── linked_services/ # Definitions for source and sink connections
-├── datasets/ # Input and output dataset definitions
-└── data_flows/ # Mapping data flows used for transformation
+├── README.md                 # Project documentation
+├── pipeline_templates/       # JSON templates for ADF pipelines
+├── linked_services/          # Definitions for source and sink connections
+├── datasets/                 # Input and output dataset definitions
+└── data_flows/               # Mapping data flows used for transformation
+
 
 ---
 
