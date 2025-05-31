@@ -8,7 +8,7 @@ The goal of this project is to automate the extraction, transformation, and load
 ## Pipeline
 ![Dashboard Preview](images/pipeline.png)
 ## DataFlow
-![Dashboard Preview](images/Dashboard.png)
+![Dashboard Preview](images/Dataflow.png)
 
 ---
 
