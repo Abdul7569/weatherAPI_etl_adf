@@ -5,6 +5,10 @@ This repository contains the implementation of an end-to-end ETL (Extract, Trans
 ## 🚀 Project Overview
 
 The goal of this project is to automate the extraction, transformation, and loading of real-time weather data using ADF and visualize it using Power BI for better insights and decision-making.
+## Pipeline
+![Dashboard Preview](images/pipeline.png)
+## DataFlow
+![Dashboard Preview](images/Dashboard.png)
 
 ---
 
