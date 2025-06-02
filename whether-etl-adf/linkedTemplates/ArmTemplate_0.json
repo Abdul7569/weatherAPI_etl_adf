@@ -506,9 +506,13 @@
 								}
 							},
 							"sink": {
-								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
 							},
 							"enableStaging": false
 						},
@@ -521,7 +525,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureSqlTable1",
+								"referenceName": "weather_json_data",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -566,7 +570,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/restapi')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
+				"[concat(variables('factoryId'), '/datasets/weather_json_data')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
 			]
 		}
