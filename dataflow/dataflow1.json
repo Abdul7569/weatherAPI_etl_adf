@@ -9,7 +9,7 @@
 						"referenceName": "weather_json_data",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "APIjson"
 				}
 			],
 			"sinks": [
@@ -18,15 +18,21 @@
 						"referenceName": "apidataTable",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "SQLdb"
 				}
 			],
 			"transformations": [
 				{
-					"name": "flatten1"
+					"name": "flatten"
 				},
 				{
-					"name": "select2"
+					"name": "selectFieldsneeded"
+				},
+				{
+					"name": "Filtervaliddata"
+				},
+				{
+					"name": "KelvntoF"
 				}
 			],
 			"scriptLines": [
@@ -41,8 +47,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     documentForm: 'documentPerLine') ~> source1",
-				"source1 foldDown(unrollMultiple(daily,daily.weather),",
+				"     documentForm: 'documentPerLine') ~> APIjson",
+				"APIjson foldDown(unrollMultiple(daily,daily.weather),",
 				"     mapColumn(",
 				"          daily,",
 				"          lat,",
@@ -52,8 +58,8 @@
 				"          weather = daily.weather",
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
-				"     skipDuplicateMapOutputs: false) ~> flatten1",
-				"flatten1 select(mapColumn(",
+				"     skipDuplicateMapOutputs: false) ~> flatten",
+				"flatten select(mapColumn(",
 				"          day_feels_like = daily.feels_like.day,",
 				"          lat,",
 				"          lon,",
@@ -91,8 +97,31 @@
 				"          main = daily.weather[1].main",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> selectFieldsneeded",
+				"KelvntoF filter(!isNull(day_temp) && day_temp >= -50 && day_temp <= 140 &&",
+				"!isNull(humidity) && humidity >= 0 && humidity <= 100 &&",
+				"!isNull(uvi) && uvi >= 0 && uvi <= 15 &&",
+				"(isNull(rain) || rain >= 0)",
+				") ~> Filtervaliddata",
+				"selectFieldsneeded derive(day_feels_like =      round(((day_feels_like - 273.15) * 9 / 5) + 32,2),",
+				"          eve_feels_like =      round(((eve_feels_like - 273.15) * 9 / 5) + 32,2),",
+				"          morn_feels_like =      round(((morn_feels_like - 273.15) * 9 / 5) + 32,2),",
+				"          night_feels_like =      round(((night_feels_like - 273.15) * 9 / 5) + 32,2),",
+				"          day_temp =      round(((day_temp - 273.15) * 9 / 5) + 32,2),",
+				"          eve_temp =      round(((eve_temp - 273.15) * 9 / 5) + 32,2),",
+				"          max_temp =      round(((max_temp - 273.15) * 9 / 5) + 32,2),",
+				"          min_temp =      round(((min_temp - 273.15) * 9 / 5) + 32,2),",
+				"          morn_temp =      round(((morn_temp - 273.15) * 9 / 5) + 32,2),",
+				"          night_temp =      round(((night_temp - 273.15) * 9 / 5) + 32,2),",
+				"          dew_point =      round(((dew_point - 273.15) * 9 / 5) + 32,2),",
+				"          dt = toTimestamp(dt * 1000),",
+				"          moonset = toTimestamp(moonset * 1000),",
+				"          moonrise = toTimestamp(moonrise * 1000),",
+				"          sunrise = toTimestamp(sunrise * 1000),",
+				"          sunset = toTimestamp(sunset * 1000),",
+				"          uvi_level = iif(uvi <= 2, 'Low',     iif(uvi <= 5, 'Moderate',         iif(uvi <= 7, 'High',             iif(uvi <= 10, 'Very High', 'Extreme')))),",
+				"          moon_phase_name = iif(moon_phase == 0 || moon_phase == 1, 'New Moon',   iif(moon_phase < 0.25, 'Waxing Crescent',     iif(moon_phase == 0.25, 'First Quarter',       iif(moon_phase < 0.5, 'Waxing Gibbous',         iif(moon_phase == 0.5, 'Full Moon',           iif(moon_phase < 0.75, 'Waning Gibbous',             iif(moon_phase == 0.75, 'Last Quarter', 'Waning Crescent')))))))) ~> KelvntoF",
+				"Filtervaliddata sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -101,7 +130,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> SQLdb"
 			]
 		}
 	}
