@@ -1,0 +1,186 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "weather_db_destination",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "day_feels_like",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "lat",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "lon",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "timezone",
+				"type": "varchar"
+			},
+			{
+				"name": "timezone_offset",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "eve_feels_like",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "morn_feels_like",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "night_feels_like",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "day_temp",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "eve_temp",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "max_temp",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "min_temp",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "morn_temp",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "night_temp",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "weather",
+				"type": "varchar"
+			},
+			{
+				"name": "clouds",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "dew_point",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "dt",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "humidity",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "moon_phase",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "moonset",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "moonrise",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "pop",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "pressure",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "rain",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "summary",
+				"type": "varchar"
+			},
+			{
+				"name": "sunrise",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "sunset",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "uvi",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "wind_deg",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "wind_speed",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "description",
+				"type": "varchar"
+			},
+			{
+				"name": "icon",
+				"type": "varchar"
+			},
+			{
+				"name": "main",
+				"type": "varchar"
+			},
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "daily_WeatherForecast"
+		}
+	}
+}

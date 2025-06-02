@@ -8,7 +8,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=YOUR_API_KEY"
+			"relativeUrl": "onecall?lat=32.78&lon=-96.8&exclude=hourly,minutely&appid=YOUR_API_KEY"
 		},
 		"schema": []
 	},
