@@ -65,13 +65,9 @@
 								}
 							},
 							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobStorageWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings"
-								}
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
 							},
 							"enableStaging": false
 						},
@@ -84,7 +80,7 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "weather_json_data",
+								"referenceName": "AzureSqlTable1",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -129,8 +125,199 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/restapi')]",
-				"[concat(variables('factoryId'), '/datasets/weather_json_data')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "weather_db_destination",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "day_feels_like",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "lat",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "lon",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "timezone",
+						"type": "varchar"
+					},
+					{
+						"name": "timezone_offset",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "eve_feels_like",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "morn_feels_like",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "night_feels_like",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "day_temp",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "eve_temp",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "max_temp",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "min_temp",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "morn_temp",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "night_temp",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "weather",
+						"type": "varchar"
+					},
+					{
+						"name": "clouds",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "dew_point",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "dt",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "humidity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "moon_phase",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "moonset",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "moonrise",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "pop",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "pressure",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "rain",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "summary",
+						"type": "varchar"
+					},
+					{
+						"name": "sunrise",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "sunset",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "uvi",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "wind_deg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "wind_speed",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "description",
+						"type": "varchar"
+					},
+					{
+						"name": "icon",
+						"type": "varchar"
+					},
+					{
+						"name": "main",
+						"type": "varchar"
+					},
+					{
+						"name": "id",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "daily_WeatherForecast"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/weather_db_destination')]"
 			]
 		},
 		{
@@ -166,7 +353,7 @@
 				"annotations": [],
 				"type": "RestResource",
 				"typeProperties": {
-					"relativeUrl": "onecall?lat=33.44&lon=-94.04&exclude=hourly,minutely&appid=cdbe36ac4f74b684c2700f69a67646da"
+					"relativeUrl": "onecall?lat=32.78&lon=-96.8&exclude=hourly,minutely&appid=YOUR_API_KEY"
 				},
 				"schema": []
 			},
